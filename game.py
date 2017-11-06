@@ -7,73 +7,95 @@ board = np.board = [
     ['3','B','*','B','*','B','*','B','*'],
     ['4','*','*','*','*','*','*','*','*'],
     ['5','*','*','*','*','*','*','*','*'],
-    ['6','W','*','W','*','W','*','W','*'],
-    ['7','*','W','*','W','*','W','*','W'],
-    ['8','W','*','W','*','W','*','W','*']
+    ['6','*','W','*','W','*','W','*','W'],
+    ['7','W','*','W','*','W','*','W','*'],
+    ['8','*','W','*','W','*','W','*','W']
     ]
-
 for rows in board:
     print rows
-def blackmove(board):
+
+def blackMove(board):
     while True:
         counterPlaceBX = input("BLACK - Input the X coordinate for the counter you want to move")
         counterPlaceBY = input("BLACK - Input the Y coordinate for the counter you want to move")
         #counterPlaceSplit = counterPlace.split(',')
         if board[counterPlaceBX][counterPlaceBY] == "B":
-            board[counterPlaceBX][counterPlaceBY] = '*'
+            pass
         else:
             print("Not your counter")
             continue
         for rows in board:
             print rows
+
         while True:
+            counterPlaceBXWhile = counterPlaceBX
+            counterPlaceBYWhile = counterPlaceBY
             newCounterBX = input("BLACK - Input the X coordinate for the place you want to move")
             newCounterBY = input("BLACK - Input the Y coordinate for the place you want to move")
 
-            if counterPlaceBY == newCounterBY:
+            if board[newCounterBX][newCounterBX] == "W" and newCounterBX > counterPlaceBXWhile:
+                  board[newCounterBX][newCounterBY] = '*'
+                  board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
+                  board[newCounterBX+1][newCounterBY+1] = 'B'
+                  print board[newCounterBX][newCounterBY]
+                  print board[counterPlaceBXWhile][counterPlaceBYWhile]
+                  print board[newCounterBX+2][newCounterBY+2]
+                  print("magic")
+                  break
+            elif counterPlaceBYWhile == newCounterBY:
                 print ("You Can Only Move Diagonally")
                 continue
-            elif board[newCounterBX][newCounterBY] is not board[counterPlaceBX+1][counterPlaceBY-1] or board[newCounterBX][newCounterBY] is not board[counterPlaceBX+1][counterPlaceBY+1]:
+            elif board[newCounterBX][newCounterBY] is not board[counterPlaceBXWhile+1][counterPlaceBYWhile+1] or board[newCounterBX][newCounterBY] is not board[counterPlaceBXWhile+1][counterPlaceBYWhile-1]:
                 print("Can't Move Here, You Can Only Move 1 Space")
                 continue
             else:
-                board[newCounterBX][newCounterBY] = 'B'
+             board[newCounterBX][newCounterBY] = 'B'
+             board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
+            break
             break
         for rows in board:
             print rows
+        return board
 
-def whitemove(board):
+
+def whiteMove(board):
     while True:
         counterPlaceWX = input("WHITE - Input the X coordinate for the counter you want to move")
         counterPlaceWY = input("WHITE - Input the Y coordinate for the counter you want to move")
 
         if board[counterPlaceWX][counterPlaceWY] == "W":
-            board[counterPlaceWX][counterPlaceWY] = '*'
+            pass
         else:
             print("Not your counter")
             continue
         for rows in board:
             print rows
         while True:
+            counterPlaceWXWhile = counterPlaceWX
+            counterPlaceWYWhile = counterPlaceWY
             newCounterWX = input("WHITE - Input the X coordinate for the place you want to move")
             newCounterWY = input("WHITE - Input the Y coordinate for the place you want to move")
 
-            if counterPlaceWY == newCounterWY:
+            if counterPlaceWYWhile == newCounterWY:
                 print ("You Can Only Move Diagonally")
                 continue
-            elif board[newCounterWX][newCounterWY] is not board[counterPlaceWX-1][counterPlaceWY+1] or board[newCounterWX][newCounterWY] is not board[counterPlaceWX-1][counterPlaceWY-1]:
+            elif board[newCounterWX][newCounterWX] == "B":
+                print("Counter To Jump")
+                continue
+            elif board[newCounterWX][newCounterWY] is not board[counterPlaceWXWhile-1][counterPlaceWYWhile+1] or board[newCounterWX][newCounterWY] is not board[counterPlaceWXWhile-1][counterPlaceWYWhile-1]:
                 print("Can't Move Here, You Can Only Move 1 Space")
                 continue
             else:
                 board[newCounterWX][newCounterWY] = 'W'
-            break
+                board[counterPlaceWXWhile][counterPlaceWYWhile] = '*'
+                break
+                break
         for rows in board:
             print rows
-        break
+        return board
 
-
-#while counters on board !=1:
+    #while counters on board !=1:
 while True:
-    whitemove(board)
-    blackmove(board)
-#if counter is blackmove
+    blackMove(board)
+    whiteMove(board)
+    #if counter is blackmove
