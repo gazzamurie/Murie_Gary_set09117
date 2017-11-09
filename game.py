@@ -8,8 +8,8 @@ board = np.board = [
     ['4','*','W','*','*','*','W','*','*'],
     ['5','*','*','*','*','*','*','*','*'],
     ['6','*','W','*','*','*','W','*','*'],
-    ['7','W','*','W','*','W','*','W','*'],
-    ['8','*','*','*','W','*','@','*','W']
+    ['7','W','*','W','*','B','*','W','*'],
+    ['8','*','*','*','W','*','*','*','W']
     ]
 for rows in board:
     print rows
@@ -44,17 +44,23 @@ def blackMove(board):
             counterPlaceBYWhile = counterPlaceBY
             newCounterBX = input("BLACK - Input the X coordinate for the place you want to move: ")
             newCounterBY = input("BLACK - Input the Y coordinate for the place you want to move: ")
-
-
+            #MAKES SURE THE BASIC COUNTER CAN ONLY MOVE FORWARD AND DIAGONALLY
             if board[counterPlaceBXWhile][counterPlaceBYWhile] == 'B' and newCounterBX is not counterPlaceBXWhile+1 and newCounterBY is not counterPlaceBYWhile+1:
-                print("Can't Move Here, You Can Only Move 1 Space")
+                print("Can't Move Here, You Can Only Move 1 Space(1)")
                 continue
             elif board[counterPlaceBXWhile][counterPlaceBYWhile] == 'B' and newCounterBX is not counterPlaceBXWhile+1 and newCounterBY is not counterPlaceBYWhile-1:
-                print("Can't Move Here, You Can Only Move 1 Space2")
+                print("Can't Move Here, You Can Only Move 1 Space(2)")
                 continue
             elif counterPlaceBYWhile == newCounterBY:
                 print ("You Can Only Move Diagonally")
                 continue
+            #IF THE BASIC(BLACK) COUNTER REACHES THE END OF THE BOARD CHANGE THE COUNTER TO A KING REPRESENTED BY A @
+            elif newCounterBX == 8:
+                 print("8")
+                 print newCounterBX
+                 board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
+                 board[newCounterBX][newCounterBY] = '@'
+                 break
             elif board[counterPlaceBXWhile][counterPlaceBYWhile] == 'B' and counterPlaceBYWhile > newCounterBY and board[newCounterBX][newCounterBY] == "W":
                 board[newCounterBX][newCounterBY] = '*'
                 board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
@@ -68,64 +74,65 @@ def blackMove(board):
                 print("B")
                 break
             elif board[counterPlaceBXWhile][counterPlaceBYWhile] == 'B':
-                    board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
-                    board[newCounterBX][newCounterBY] = 'B'
-                    break
+                 board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
+                 board[newCounterBX][newCounterBY] = 'B'
+                 break
 
                 #KINGS!!!!
-            elif board[counterPlaceBXWhile][counterPlaceBYWhile] == '@' and counterPlaceBYWhile > newCounterBY and  newCounterBX < counterPlaceBXWhile and board[newCounterBX][newCounterBY] == "W":
-                board[newCounterBX][newCounterBY] = '*'
-                board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
-                board[newCounterBX-1][newCounterBY-1] = '@'
-                print("KC")
+
+            #ALLOWS THE KINGS TO MOVE IN ALL DIRECTIONS ONE SPACE
+            elif board[counterPlaceBXWhile][counterPlaceBYWhile] == '@' and newCounterBX is not counterPlaceBXWhile-1 and newCounterBY is not counterPlaceBYWhile+1:
+                print("Can't Move Here, You Can Only Move 1 Space(KK1)")
+                pass
+            elif board[counterPlaceBXWhile][counterPlaceBYWhile] == '@' and newCounterBX is not counterPlaceBXWhile-1 and newCounterBY is not counterPlaceBYWhile-1:
+                print("Can't Move Here, You Can Only Move 1 Space(KK2)")
+                pass
+            elif board[counterPlaceBXWhile][counterPlaceBYWhile] == '@' and newCounterBX is not counterPlaceBXWhile+1 and newCounterBY is not counterPlaceBYWhile+1:
+                print("Can't Move Here, You Can Only Move 1 Space(K1)")
+                pass
+            elif board[counterPlaceBXWhile][counterPlaceBYWhile] == '@' and newCounterBX is not counterPlaceBXWhile+1 and newCounterBY is not counterPlaceBYWhile-1:
+                print("Can't Move Here, You Can Only Move 1 Space(K2)")
+                pass
                 break
+            elif counterPlaceBYWhile == newCounterBY:
+                print ("You Can Only Move Diagonally")
+                continue
+            #ALLOWS THE KING TO JUMP OVER A WHITE COUNTER
+            elif board[counterPlaceBXWhile][counterPlaceBYWhile] == '@' and counterPlaceBYWhile > newCounterBY and newCounterBX < counterPlaceBXWhile and board[newCounterBX][newCounterBY] == "W":
+                 board[newCounterBX][newCounterBY] = '*'
+                 board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
+                 board[newCounterBX-1][newCounterBY-1] = '@'
+                 print("KC")
+                 break
             elif board[counterPlaceBXWhile][counterPlaceBYWhile] == '@'  and counterPlaceBYWhile < newCounterBY and newCounterBX < counterPlaceBXWhile and board[newCounterBX][newCounterBY] == "W":
-                board[newCounterBX][newCounterBY] = '*'
-                board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
-                board[newCounterBX-1][newCounterBY+1] = '@'
-                print("KD")
-                break
+                 board[newCounterBX][newCounterBY] = '*'
+                 board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
+                 board[newCounterBX-1][newCounterBY+1] = '@'
+                 print("KD")
+                 break
             elif board[counterPlaceBXWhile][counterPlaceBYWhile] == '@' and counterPlaceBYWhile > newCounterBY and board[newCounterBX][newCounterBY] == "W":
-                board[newCounterBX][newCounterBY] = '*'
-                board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
-                board[newCounterBX+1][newCounterBY-1] = '@'
-                print("KA")
-                break
+                 board[newCounterBX][newCounterBY] = '*'
+                 board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
+                 board[newCounterBX+1][newCounterBY-1] = '@'
+                 print("KA")
+                 break
             elif board[counterPlaceBXWhile][counterPlaceBYWhile] == '@'  and counterPlaceBYWhile < newCounterBY and board[newCounterBX][newCounterBY] == "W":
-                board[newCounterBX][newCounterBY] = '*'
-                board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
-                board[newCounterBX+1][newCounterBY+1] = '@'
-                print("KB")
-                break
-            elif newCounterBX == 8:
+                 board[newCounterBX][newCounterBY] = '*'
+                 board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
+                 board[newCounterBX+1][newCounterBY+1] = '@'
+                 print("KB")
+                 break
+             #ALLOWS THE KING TO MOVE WHILE KEEPING KING STATUS
+            elif board[counterPlaceBXWhile][counterPlaceBYWhile] == '@':
                  board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
                  board[newCounterBX][newCounterBY] = '@'
-            elif board[counterPlaceBXWhile][counterPlaceBYWhile] == '@' and counterPlaceBYWhile != newCounterBY:
-                board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
-                board[newCounterBX][newCounterBY] = '@'
-                break
+                 break
+            #IF NO CONDITIONS WERE MET IE NO JUMP OF NO KING TO CROWN THEN JUMP MOVE THE ONE SPACE
             else:
                 board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
                 board[newCounterBX][newCounterBY] = 'B'
                 break
                 break
-
-            # if board[counterPlaceBXWhile][counterPlaceBYWhile] == '@':
-            #     pass
-            # elif board[counterPlaceBXWhile][counterPlaceBYWhile] == '@' and newCounterBX is not counterPlaceBXWhile-1 and newCounterBY is not counterPlaceBYWhile+1:
-            #     print("Can't Move Here, You Can Only Move 1 Space KING")
-            #     continue
-            # elif  board[counterPlaceBXWhile][counterPlaceBYWhile] == '@' and newCounterBX is not counterPlaceBXWhile-1 and newCounterBY is not counterPlaceBYWhile-1:
-            #     print("Can't Move Here, You Can Only Move 1 Space KING 2")
-            #     continue
-            # elif board[counterPlaceBXWhile][counterPlaceBYWhile] == '@' and counterPlaceBYWhile == newCounterBY:
-            #     print ("You Can Only Move Diagonally")
-            #     continue
-            # else:
-            #      board[counterPlaceBXWhile][counterPlaceBYWhile] = '*'
-            #      board[newCounterBX][newCounterBY] = '@'
-            #      print("KINGMOVE")
-            #      break
         for rows in board:
             print rows
         return board
